@@ -32,7 +32,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 /* One reading column; pages that pass an `aside` get a second column at 1100px+. */
-:root { --pad: clamp(1.25rem, 3.4vw, 3.25rem); }
+:root { --pad: clamp(1rem, 2.2vw, 2rem); --gap: clamp(3rem, 5vw, 6rem); }
 .page {
   max-width: 640px;
   margin: 0 auto;
@@ -46,7 +46,7 @@ main { padding: 64px 20px 96px; }
     grid-template-columns: minmax(0, 640px) auto;
     justify-content: center;
     align-items: start;
-    column-gap: clamp(3rem, 5vw, 6rem);
+    column-gap: var(--gap);
     padding: var(--pad);
   }
   .page:has(> aside) > main { grid-column: 1; grid-row: 1; padding: 0 0 96px; }
