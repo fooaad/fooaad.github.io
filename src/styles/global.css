@@ -39,15 +39,17 @@ body {
 }
 main { padding: 64px 20px 96px; }
 @media (min-width: 1100px) {
+  /* Text and aside sit side by side as one centered block. */
   .page:has(> aside) {
-    max-width: 1500px;
+    max-width: none;
     display: grid;
-    grid-template-columns: minmax(0, 1.75fr) minmax(380px, 1fr);
+    grid-template-columns: minmax(0, 640px) auto;
+    justify-content: center;
     align-items: start;
-    gap: clamp(2rem, 3.6vw, 3.75rem);
+    column-gap: clamp(3rem, 5vw, 6rem);
     padding: var(--pad);
   }
-  .page:has(> aside) > main { grid-column: 1; grid-row: 1; width: min(100%, 640px); justify-self: start; padding: 0 0 96px; }
+  .page:has(> aside) > main { grid-column: 1; grid-row: 1; padding: 0 0 96px; }
   .page:has(> aside) > aside { grid-column: 2; grid-row: 1; }
 }
 a {

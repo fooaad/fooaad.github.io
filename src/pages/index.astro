@@ -103,11 +103,10 @@ const shownLinks = links.filter((l) => l.url);
       display: block;
       position: sticky;
       top: var(--pad);
-      /* Keep the painting's own shape (--ratio, set inline) so nothing is cropped:
-         as tall as the window allows, unless the column is the tighter limit. */
+      /* Full window height at the painting's own shape (--ratio, set inline), so nothing is cropped.
+         In tall, narrow windows it stops at 38% of the width so the text keeps its room. */
+      height: min(calc(100svh - 2 * var(--pad)), calc(38vw / var(--ratio)));
       aspect-ratio: var(--ratio);
-      width: min(100%, calc((100svh - 2 * var(--pad)) * var(--ratio)));
-      justify-self: end;
       border: 1px solid var(--line);
       border-radius: 10px;
       overflow: hidden;
