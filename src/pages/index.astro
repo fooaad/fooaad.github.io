@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
-import { profile, intro, interests, work, research, competitive, education, links } from '../data/site';
+import { profile, intro, work, research, competitive, education, links } from '../data/site';
 import { getPosts, formatDate } from '../lib';
 import art from '../assets/dhaka-tampa.webp';
 
@@ -33,9 +33,6 @@ const shownLinks = links.filter((l) => l.url);
   </header>
 
   {intro.map((p) => <p>{p}</p>)}
-
-  <h2>Interests</h2>
-  <p>{interests.join(' · ')}</p>
 
   <h2>Work</h2>
   <ul class="plain">

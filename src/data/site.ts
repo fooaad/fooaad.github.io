@@ -14,12 +14,6 @@ export const intro = [
   "Before that I spent three years at Samsung R&D building iOS and Android apps, from push-to-talk calling for first responders to wearable apps for early Alzheimer's detection research. I came up through competitive programming and still enjoy a hard algorithm problem.",
 ];
 
-export const interests = [
-  'Evaluating AI coding tools and agents',
-  'LLM orchestration',
-  'Reliable, trustworthy developer tooling',
-];
-
 export const work = [
   { org: 'Re:cruit', role: 'Software engineering consultant', dates: '2026' },
   { org: 'Samsung R&D', role: 'Senior software engineer, Wearables', dates: '2024 – 2025' },
