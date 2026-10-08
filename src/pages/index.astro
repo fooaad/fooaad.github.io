@@ -3,12 +3,26 @@ import Base from '../layouts/Base.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { profile, intro, interests, work, research, competitive, education, links } from '../data/site';
 import { getPosts, formatDate } from '../lib';
+import { Picture } from 'astro:assets';
+import art from '../assets/dhaka-tampa.webp';
 
 const posts = await getPosts();
 const shownLinks = links.filter((l) => l.url);
 ---
 
 <Base>
+  <aside slot="aside" class="art">
+    <Picture
+      src={art}
+      formats={['avif', 'webp']}
+      fallbackFormat="webp"
+      widths={[480, 866]}
+      sizes="(min-width: 1100px) 400px, 100vw"
+      alt="Watercolor of Dhaka's Ahsan Manzil across the river from the Tampa skyline"
+      loading="eager"
+    />
+  </aside>
+
   <header>
     <div class="top">
       <h1>{profile.name}</h1>
@@ -81,6 +95,26 @@ const shownLinks = links.filter((l) => l.url);
 </Base>
 
 <style>
+  /* Phones and tablets: a short banner above the content. Wide screens: a tall panel beside it. */
+  .art {
+    margin: 20px 20px 0;
+    height: 180px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .art :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 28%; }
+  .art + :global(main) { padding-top: 40px; }
+  @media (min-width: 640px) { .art { height: 240px; } }
+  @media (min-width: 1100px) {
+    .art {
+      position: sticky;
+      top: 64px;
+      margin: 64px 0 0;
+      height: min(calc(100vh - 128px), 840px);
+    }
+    .art :global(img) { object-position: center; }
+    .art + :global(main) { padding-top: 64px; }
+  }
   .top { display: flex; justify-content: space-between; align-items: center; }
   .sub { margin: 4px 0 40px; font-size: 16px; }
   .note { margin: 0 0 8px; font-size: 16px; }

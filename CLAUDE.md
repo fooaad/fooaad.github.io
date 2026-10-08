@@ -13,7 +13,8 @@ Fuad's personal site, built with Astro + TypeScript. Static output, no backend. 
 - `src/data/site.ts`: all homepage text (intro, work, research, links). Content changes go here, not in markup.
 - `src/content/writing/*.md`: blog posts, one file per post at `/writing/<file-name>/`. Schema in `src/content.config.ts`. `draft: true` posts show in dev only.
 - `src/pages/`: routes (`index.astro`, `writing/[id].astro`, `rss.xml.ts`, `404.astro`)
-- `src/layouts/Base.astro`: `<head>`, meta tags, theme bootstrap
+- `src/layouts/Base.astro`: `<head>`, meta tags, theme bootstrap; an optional `slot="aside"` becomes a second column at ≥1100px
+- `src/assets/dhaka-tampa.webp`: homepage illustration (Dhaka above, Tampa below); a banner on narrow screens, a sticky side panel on wide ones
 - `src/styles/global.css`: all global styles; colors are CSS variables with a `[data-theme='dark']` override
 - `.github/workflows/deploy.yml`: builds and deploys on push to `main`
 

@@ -31,10 +31,23 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
-main {
+/* One reading column; pages that pass an `aside` get a second column on wide screens. */
+.page {
   max-width: 640px;
   margin: 0 auto;
-  padding: 64px 20px 96px;
+}
+main { padding: 64px 20px 96px; }
+@media (min-width: 1100px) {
+  .page:has(> aside) {
+    max-width: 1120px;
+    display: grid;
+    grid-template-columns: minmax(0, 640px) minmax(0, 400px);
+    justify-content: space-between;
+    column-gap: 64px;
+    padding: 0 20px;
+  }
+  .page:has(> aside) > main { padding-inline: 0; grid-column: 1; grid-row: 1; }
+  .page > aside { grid-column: 2; grid-row: 1; }
 }
 a {
   color: var(--link);
