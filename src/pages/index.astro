@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { profile, intro, interests, work, research, competitive, education, links } from '../data/site';
 import { getPosts, formatDate } from '../lib';
-import { Picture } from 'astro:assets';
 import art from '../assets/dhaka-tampa.webp';
 
 const posts = await getPosts();
@@ -11,16 +10,18 @@ const shownLinks = links.filter((l) => l.url);
 ---
 
 <Base>
+  <!-- Original file (not recompressed) so the painting stays sharp. Only screens 1100px+ ever download it;
+       smaller screens get a 1px placeholder and the panel stays hidden. -->
   <aside slot="aside" class="art">
-    <Picture
-      src={art}
-      formats={['avif', 'webp']}
-      fallbackFormat="webp"
-      widths={[480, 866]}
-      sizes="(min-width: 1100px) 400px, 100vw"
-      alt="Watercolor of Dhaka's Ahsan Manzil across the river from the Tampa skyline"
-      loading="eager"
-    />
+    <picture>
+      <source media="(min-width: 1100px)" srcset={art.src} />
+      <img
+        src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+        width={art.width}
+        height={art.height}
+        alt="Watercolor of Dhaka's Ahsan Manzil across the river from the Tampa skyline"
+      />
+    </picture>
   </aside>
 
   <header>
@@ -95,25 +96,21 @@ const shownLinks = links.filter((l) => l.url);
 </Base>
 
 <style>
-  /* Phones and tablets: a short banner above the content. Wide screens: a tall panel beside it. */
-  .art {
-    margin: 20px 20px 0;
-    height: 180px;
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  .art :global(img) { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 28%; }
-  .art + :global(main) { padding-top: 40px; }
-  @media (min-width: 640px) { .art { height: 240px; } }
+  /* Wide screens only: a sticky panel that fills the window height. Hidden below 1100px. */
+  .art { display: none; }
   @media (min-width: 1100px) {
     .art {
+      display: block;
       position: sticky;
-      top: 64px;
-      margin: 64px 0 0;
-      height: min(calc(100vh - 128px), 840px);
+      top: var(--pad);
+      height: calc(100svh - 2 * var(--pad));
+      min-height: min(72svh, 760px);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
     }
-    .art :global(img) { object-position: center; }
-    .art + :global(main) { padding-top: 64px; }
+    .art picture, .art img { display: block; width: 100%; height: 100%; }
+    .art img { object-fit: cover; }
   }
   .top { display: flex; justify-content: space-between; align-items: center; }
   .sub { margin: 4px 0 40px; font-size: 16px; }

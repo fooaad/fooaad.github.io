@@ -31,7 +31,8 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
-/* One reading column; pages that pass an `aside` get a second column on wide screens. */
+/* One reading column; pages that pass an `aside` get a second column at 1100px+. */
+:root { --pad: clamp(1.25rem, 3.4vw, 3.25rem); }
 .page {
   max-width: 640px;
   margin: 0 auto;
@@ -39,15 +40,15 @@ body {
 main { padding: 64px 20px 96px; }
 @media (min-width: 1100px) {
   .page:has(> aside) {
-    max-width: 1120px;
+    max-width: 1500px;
     display: grid;
-    grid-template-columns: minmax(0, 640px) minmax(0, 400px);
-    justify-content: space-between;
-    column-gap: 64px;
-    padding: 0 20px;
+    grid-template-columns: minmax(0, 1.75fr) minmax(380px, 1fr);
+    align-items: start;
+    gap: clamp(2rem, 3.6vw, 3.75rem);
+    padding: var(--pad);
   }
-  .page:has(> aside) > main { padding-inline: 0; grid-column: 1; grid-row: 1; }
-  .page > aside { grid-column: 2; grid-row: 1; }
+  .page:has(> aside) > main { grid-column: 1; grid-row: 1; width: min(100%, 640px); justify-self: start; padding: 0 0 96px; }
+  .page:has(> aside) > aside { grid-column: 2; grid-row: 1; }
 }
 a {
   color: var(--link);
