@@ -1,16 +1,88 @@
 ---
+import Base from '../layouts/Base.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { profile, intro, interests, work, research, competitive, education, links } from '../data/site';
+import { getPosts, formatDate } from '../lib';
+
+const posts = await getPosts();
+const shownLinks = links.filter((l) => l.url);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base>
+  <header>
+    <div class="top">
+      <h1>{profile.name}</h1>
+      <ThemeToggle />
+    </div>
+    <p class="muted sub">@{profile.handle} · {profile.tagline} · {profile.location}</p>
+  </header>
+
+  {intro.map((p) => <p>{p}</p>)}
+
+  <h2>Interests</h2>
+  <p>{interests.join(' · ')}</p>
+
+  <h2>Work</h2>
+  <ul class="plain">
+    {work.map((w) => (
+      <li class="row">
+        <span>{w.org} <span class="muted">— {w.role}</span></span>
+        <span class="date">{w.dates}</span>
+      </li>
+    ))}
+  </ul>
+
+  <h2>Research</h2>
+  <ul class="plain">
+    {research.map((r) => (
+      <li class="item">
+        <div class="row">
+          <span>{r.url ? <a href={r.url}>{r.title}</a> : r.title}</span>
+          <span class="date">{r.venue} · {r.year}</span>
+        </div>
+        <p class="muted note">{r.note}</p>
+      </li>
+    ))}
+  </ul>
+
+  <h2>Competitive programming</h2>
+  <ul class="plain">
+    {competitive.map((c) => <li class="row"><span>{c}</span></li>)}
+  </ul>
+
+  <h2>Education</h2>
+  <ul class="plain">
+    {education.map((e) => (
+      <li class="row">
+        <span>{e.school} <span class="muted">— {e.degree}</span></span>
+        <span class="date">{e.dates}</span>
+      </li>
+    ))}
+  </ul>
+
+  {posts.length > 0 && (
+    <>
+      <h2>Writing</h2>
+      <ul class="plain">
+        {posts.map((post) => (
+          <li class="row">
+            <a href={`/writing/${post.id}/`}>{post.data.title}</a>
+            <span class="date">{post.data.draft ? 'draft · ' : ''}{formatDate(post.data.date)}</span>
+          </li>
+        ))}
+      </ul>
+    </>
+  )}
+
+  <footer>
+    <a href={`mailto:${profile.email}`}>{profile.email}</a>
+    {shownLinks.map((l) => <> · <a href={l.url}>{l.label}</a></>)}
+  </footer>
+</Base>
+
+<style>
+  .top { display: flex; justify-content: space-between; align-items: center; }
+  .sub { margin: 4px 0 40px; font-size: 16px; }
+  .note { margin: 0 0 8px; font-size: 16px; }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 16px; color: var(--muted); }
+</style>

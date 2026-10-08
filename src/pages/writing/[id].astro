@@ -1,0 +1,36 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ThemeToggle from '../../components/ThemeToggle.astro';
+import { getPosts, formatDate } from '../../lib';
+import { profile } from '../../data/site';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Base title={post.data.title} description={post.data.description}>
+  <nav class="top">
+    <a href="/">← {profile.name}</a>
+    <ThemeToggle />
+  </nav>
+  <article>
+    <h1>{post.data.title}</h1>
+    <p class="muted date"><time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time></p>
+    <div class="prose"><Content /></div>
+  </article>
+</Base>
+
+<style>
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 48px; font-size: 16px; }
+  .date { margin: 4px 0 32px; font-size: 16px; }
+  .prose :global(:not(pre) > code) { font-size: 0.85em; background: var(--line); padding: 1px 5px; border-radius: 4px; }
+  .prose :global(pre) { overflow-x: auto; padding: 14px; border-radius: 6px; font-size: 14px; }
+  .prose :global(img) { max-width: 100%; height: auto; }
+  .prose :global(h2) { color: var(--text); font-size: 21px; margin-top: 40px; letter-spacing: 0; }
+</style>
