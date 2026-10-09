@@ -125,6 +125,8 @@ const shownLinks = links.filter((l) => l.url);
       aspect-ratio: var(--ratio);
       /* Own compositing layer, so scrolling moves it as one piece instead of repainting (no jitter). */
       will-change: transform;
+      /* Nudged right of its column for a better balance with the text; the text doesn't move. */
+      translate: clamp(2rem, 5vw, 6rem) 0;
     }
     .art picture, .art img { display: block; width: 100%; height: 100%; }
     .art img { object-fit: cover; }

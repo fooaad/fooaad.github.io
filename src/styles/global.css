@@ -51,6 +51,9 @@ main { padding: 64px 20px 96px; }
     align-items: start;
     column-gap: var(--gap);
     padding: 0 var(--pad);
+    /* The nudged image can poke past the right edge in narrow windows; clip it instead of
+       scrolling sideways (clip, unlike hidden, keeps the image sticky). */
+    overflow-x: clip;
   }
   .page:has(> aside) > main { grid-column: 1; grid-row: 1; padding: var(--pad) 0 96px; }
   .page:has(> aside) > aside { grid-column: 2; grid-row: 1; }
