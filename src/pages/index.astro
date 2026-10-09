@@ -117,19 +117,13 @@ const shownLinks = links.filter((l) => l.url);
     .art {
       display: block;
       position: sticky;
-      top: var(--pad);
-      /* Full window height at the image's own shape (--ratio, set inline), so nothing is cropped.
-         The text column keeps its full 640px; in narrower windows the image gets what's left. */
-      height: min(
-        calc(100svh - 2 * var(--pad)),
-        calc((100vw - 640px - var(--gap) - 2 * var(--pad) - 16px) / var(--ratio))
-      );
+      top: 0;
+      /* The images are transparent apart from the beam and Earth, so the panel can run the full
+         window height (pulled up over the page padding) without showing a box. Keeps the image's
+         own shape (--ratio, set inline); the text column keeps its 640px and the image gets what's left. */
+      margin-top: calc(-1 * var(--pad));
+      height: min(100svh, calc((100vw - 640px - var(--gap) - 2 * var(--pad) - 16px) / var(--ratio)));
       aspect-ratio: var(--ratio);
-      /* No frame: the photo fades into the page on every side, so it blends with either theme. */
-      mask-image:
-        linear-gradient(to right, transparent, #000 18%, #000 82%, transparent),
-        linear-gradient(to bottom, transparent, #000 12%, #000 60%, transparent);
-      mask-composite: intersect;
     }
     .art picture, .art img { display: block; width: 100%; height: 100%; }
     .art img { object-fit: cover; }
