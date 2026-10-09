@@ -39,6 +39,9 @@ body {
 }
 main { padding: 64px 20px 96px; }
 @media (min-width: 1100px) {
+  /* No rubber-band bounce at the top or bottom, so the pinned image never jerks with the page.
+     Wide screens only: on phones the bounce also drives pull-to-refresh. */
+  html { overscroll-behavior: none; }
   /* Text and aside sit side by side as one centered block. */
   .page:has(> aside) {
     max-width: none;
