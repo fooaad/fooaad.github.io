@@ -14,7 +14,7 @@ Fuad's personal site, built with Astro + TypeScript. Static output, no backend. 
 - `src/content/writing/*.md`: blog posts, one file per post at `/writing/<file-name>/`. Schema in `src/content.config.ts`. `draft: true` posts show in dev only.
 - `src/pages/`: routes (`index.astro`, `writing/[id].astro`, `rss.xml.ts`, `404.astro`)
 - `src/layouts/Base.astro`: `<head>`, meta tags, theme bootstrap; an optional `slot="aside"` becomes a second column at ≥1100px
-- `src/assets/pale-blue-dot.webp`: homepage image, a tall crop centered on Earth from NASA's Pale Blue Dot Revisited (PIA23645, NASA/JPL-Caltech, credited in the footer). Only at 1100px+, full height, uncropped, edges masked to fade into the page; light mode shows a warm grayscale negative via CSS filter (ink-print look). A ring marks Earth via `earth` (x/y %) in `index.astro`: update it if the crop changes
+- `src/assets/pale-blue-dot-{light,dark}.webp`: homepage illustration after Voyager's Pale Blue Dot, one per theme (ChatGPT-generated, upscaled 2x with Upscayl, backgrounds matched to `--bg`). Only at 1100px+, full height, uncropped, edges masked into the page. Earth's position per image lives in the `art` array in `index.astro`; it drives the ring
 - `src/styles/global.css`: all global styles; colors are CSS variables with a `[data-theme='dark']` override
 - `.github/workflows/deploy.yml`: builds and deploys on push to `main`
 

@@ -3,32 +3,41 @@ import Base from '../layouts/Base.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { profile, intro, work, research, competitive, education, links } from '../data/site';
 import { getPosts, formatDate } from '../lib';
-import art from '../assets/pale-blue-dot.webp';
+import artLight from '../assets/pale-blue-dot-light.webp';
+import artDark from '../assets/pale-blue-dot-dark.webp';
 
-// Where Earth sits in the cropped photo, as % of width and height (for the marker).
-const earth = { x: 50, y: 51.9 };
+// One illustration per theme, with where Earth sits in each (% of width and height, for the ring).
+const art = [
+  { theme: 'light', img: artLight, earth: { x: 48.3, y: 50.8 } },
+  { theme: 'dark', img: artDark, earth: { x: 48.9, y: 49.6 } },
+];
 
 const posts = await getPosts();
 const shownLinks = links.filter((l) => l.url);
 ---
 
 <Base>
-  <!-- Original file (not recompressed) so the image stays sharp. Only screens 1100px+ ever download it;
-       smaller screens get a 1px placeholder and the panel stays hidden. -->
+  <!-- Originals (not recompressed) so they stay sharp; the page shows the one for the current theme.
+       Only screens 1100px+ download them; smaller screens get a 1px placeholder and the panel stays hidden. -->
   <aside
     slot="aside"
     class="art"
-    style={`--ratio: ${art.width / art.height}; --earth-x: ${earth.x}%; --earth-y: ${earth.y}%`}
+    style={[
+      `--ratio: ${artDark.width / artDark.height}`,
+      ...art.map(({ theme, earth }) => `--${theme}-x: ${earth.x}%; --${theme}-y: ${earth.y}%`),
+    ].join('; ')}
   >
-    <picture>
-      <source media="(min-width: 1100px)" srcset={art.src} />
-      <img
-        src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
-        width={art.width}
-        height={art.height}
-        alt="Pale Blue Dot: Earth as a tiny speck in a sunbeam, photographed by Voyager 1 from about 6 billion kilometers away"
-      />
-    </picture>
+    {art.map(({ theme, img }) => (
+      <picture class={theme}>
+        <source media="(min-width: 1100px)" srcset={img.src} />
+        <img
+          src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
+          width={img.width}
+          height={img.height}
+          alt="Illustration after Voyager 1's Pale Blue Dot: Earth as a tiny blue speck in a faint beam of light"
+        />
+      </picture>
+    ))}
     <span class="earth" aria-hidden="true"></span>
     <p class="earth-note">That's here. That's home. That's us.<span>Carl Sagan</span></p>
   </aside>
@@ -98,7 +107,6 @@ const shownLinks = links.filter((l) => l.url);
   <footer>
     <a href={`mailto:${profile.email}`}>{profile.email}</a>
     {shownLinks.map((l) => <> · <a href={l.url}>{l.label}</a></>)}
-    <p class="credit">Image: <a href="https://science.nasa.gov/photojournal/pale-blue-dot-revisited">Pale Blue Dot Revisited</a>, Voyager 1 · NASA/JPL-Caltech</p>
   </footer>
 </Base>
 
@@ -125,8 +133,12 @@ const shownLinks = links.filter((l) => l.url);
     }
     .art picture, .art img { display: block; width: 100%; height: 100%; }
     .art img { object-fit: cover; }
-    /* Light mode: a warm grayscale negative, like an ink print on the cream page, with Earth as a dark speck. */
-    :global([data-theme='light']) .art img { filter: grayscale(1) invert(1) contrast(1.35) brightness(1.05) sepia(0.15); }
+    /* Show the version for the current theme; its Earth position drives the ring. */
+    .art picture { display: none; }
+    :global([data-theme='light']) .art { --earth-x: var(--light-x); --earth-y: var(--light-y); }
+    :global([data-theme='dark']) .art { --earth-x: var(--dark-x); --earth-y: var(--dark-y); }
+    :global([data-theme='light']) .art picture.light,
+    :global([data-theme='dark']) .art picture.dark { display: block; }
 
     /* A thin ring around Earth with Sagan's line just below it. */
     .earth,
@@ -154,6 +166,5 @@ const shownLinks = links.filter((l) => l.url);
   .top { display: flex; justify-content: space-between; align-items: center; }
   .sub { margin: 4px 0 40px; font-size: 16px; }
   .note { margin: 0 0 8px; font-size: 16px; }
-  .credit { margin: 12px 0 0; font-size: 14px; }
   footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 16px; color: var(--muted); }
 </style>
