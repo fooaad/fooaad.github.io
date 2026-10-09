@@ -3,14 +3,14 @@ import Base from '../layouts/Base.astro';
 import ThemeToggle from '../components/ThemeToggle.astro';
 import { profile, intro, work, research, competitive, education, links } from '../data/site';
 import { getPosts, formatDate } from '../lib';
-import art from '../assets/dhaka-tampa.webp';
+import art from '../assets/pale-blue-dot.webp';
 
 const posts = await getPosts();
 const shownLinks = links.filter((l) => l.url);
 ---
 
 <Base>
-  <!-- Original file (not recompressed) so the painting stays sharp. Only screens 1100px+ ever download it;
+  <!-- Original file (not recompressed) so the image stays sharp. Only screens 1100px+ ever download it;
        smaller screens get a 1px placeholder and the panel stays hidden. -->
   <aside slot="aside" class="art" style={`--ratio: ${art.width / art.height}`}>
     <picture>
@@ -19,7 +19,7 @@ const shownLinks = links.filter((l) => l.url);
         src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
         width={art.width}
         height={art.height}
-        alt="Watercolor of Dhaka's Ahsan Manzil across the river from the Tampa skyline"
+        alt="Pale Blue Dot: Earth as a tiny speck in a sunbeam, photographed by Voyager 1 from about 6 billion kilometers away"
       />
     </picture>
   </aside>
@@ -89,6 +89,7 @@ const shownLinks = links.filter((l) => l.url);
   <footer>
     <a href={`mailto:${profile.email}`}>{profile.email}</a>
     {shownLinks.map((l) => <> · <a href={l.url}>{l.label}</a></>)}
+    <p class="credit">Image: <a href="https://science.nasa.gov/photojournal/pale-blue-dot-revisited">Pale Blue Dot Revisited</a>, Voyager 1 · NASA/JPL-Caltech</p>
   </footer>
 </Base>
 
@@ -100,8 +101,8 @@ const shownLinks = links.filter((l) => l.url);
       display: block;
       position: sticky;
       top: var(--pad);
-      /* Full window height at the painting's own shape (--ratio, set inline), so nothing is cropped.
-         The text column keeps its full 640px; in narrower windows the painting gets what's left. */
+      /* Full window height at the image's own shape (--ratio, set inline), so nothing is cropped.
+         The text column keeps its full 640px; in narrower windows the image gets what's left. */
       height: min(
         calc(100svh - 2 * var(--pad)),
         calc((100vw - 640px - var(--gap) - 2 * var(--pad) - 16px) / var(--ratio))
@@ -113,11 +114,10 @@ const shownLinks = links.filter((l) => l.url);
     }
     .art picture, .art img { display: block; width: 100%; height: 100%; }
     .art img { object-fit: cover; }
-    /* Slightly muted on dark backgrounds so the painting doesn't outshine the text. */
-    :global([data-theme='dark']) .art img { filter: brightness(0.9) saturate(0.9); }
   }
   .top { display: flex; justify-content: space-between; align-items: center; }
   .sub { margin: 4px 0 40px; font-size: 16px; }
   .note { margin: 0 0 8px; font-size: 16px; }
+  .credit { margin: 12px 0 0; font-size: 14px; }
   footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 16px; color: var(--muted); }
 </style>
