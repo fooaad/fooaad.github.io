@@ -47,9 +47,9 @@ main { padding: 64px 20px 96px; }
     justify-content: center;
     align-items: start;
     column-gap: var(--gap);
-    padding: var(--pad);
+    padding: 0 var(--pad);
   }
-  .page:has(> aside) > main { grid-column: 1; grid-row: 1; padding: 0 0 96px; }
+  .page:has(> aside) > main { grid-column: 1; grid-row: 1; padding: var(--pad) 0 96px; }
   .page:has(> aside) > aside { grid-column: 2; grid-row: 1; }
 }
 a {
