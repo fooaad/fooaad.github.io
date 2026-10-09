@@ -125,8 +125,8 @@ const shownLinks = links.filter((l) => l.url);
     }
     .art picture, .art img { display: block; width: 100%; height: 100%; }
     .art img { object-fit: cover; }
-    /* Light mode: a negative of the same photo, pale sky with Earth as a dark speck. */
-    :global([data-theme='light']) .art img { filter: invert(1) hue-rotate(180deg) brightness(1.08) contrast(0.85); }
+    /* Light mode: a warm grayscale negative, like an ink print on the cream page, with Earth as a dark speck. */
+    :global([data-theme='light']) .art img { filter: grayscale(1) invert(1) contrast(1.35) brightness(1.05) sepia(0.15); }
 
     /* A thin ring around Earth with Sagan's line just below it. */
     .earth,
