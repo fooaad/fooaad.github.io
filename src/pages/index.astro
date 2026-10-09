@@ -5,6 +5,9 @@ import { profile, intro, work, research, competitive, education, links } from '.
 import { getPosts, formatDate } from '../lib';
 import art from '../assets/pale-blue-dot.webp';
 
+// Where Earth sits in the cropped photo, as % of width and height (for the marker).
+const earth = { x: 50, y: 51.9 };
+
 const posts = await getPosts();
 const shownLinks = links.filter((l) => l.url);
 ---
@@ -12,7 +15,11 @@ const shownLinks = links.filter((l) => l.url);
 <Base>
   <!-- Original file (not recompressed) so the image stays sharp. Only screens 1100px+ ever download it;
        smaller screens get a 1px placeholder and the panel stays hidden. -->
-  <aside slot="aside" class="art" style={`--ratio: ${art.width / art.height}`}>
+  <aside
+    slot="aside"
+    class="art"
+    style={`--ratio: ${art.width / art.height}; --earth-x: ${earth.x}%; --earth-y: ${earth.y}%`}
+  >
     <picture>
       <source media="(min-width: 1100px)" srcset={art.src} />
       <img
@@ -22,6 +29,8 @@ const shownLinks = links.filter((l) => l.url);
         alt="Pale Blue Dot: Earth as a tiny speck in a sunbeam, photographed by Voyager 1 from about 6 billion kilometers away"
       />
     </picture>
+    <span class="earth" aria-hidden="true"></span>
+    <p class="earth-note">That's here. That's home. That's us.<span>Carl Sagan</span></p>
   </aside>
 
   <header>
@@ -108,12 +117,39 @@ const shownLinks = links.filter((l) => l.url);
         calc((100vw - 640px - var(--gap) - 2 * var(--pad) - 16px) / var(--ratio))
       );
       aspect-ratio: var(--ratio);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      overflow: hidden;
+      /* No frame: the photo fades into the page on every side, so it blends with either theme. */
+      mask-image:
+        linear-gradient(to right, transparent, #000 18%, #000 82%, transparent),
+        linear-gradient(to bottom, transparent, #000 12%, #000 60%, transparent);
+      mask-composite: intersect;
     }
     .art picture, .art img { display: block; width: 100%; height: 100%; }
     .art img { object-fit: cover; }
+    /* Light mode: a negative of the same photo, pale sky with Earth as a dark speck. */
+    :global([data-theme='light']) .art img { filter: invert(1) hue-rotate(180deg) brightness(1.08) contrast(0.85); }
+
+    /* A thin ring around Earth with Sagan's line just below it. */
+    .earth,
+    .earth-note { position: absolute; left: var(--earth-x); translate: -50% 0; }
+    .earth {
+      top: var(--earth-y);
+      width: 22px;
+      height: 22px;
+      translate: -50% -50%;
+      border: 1px solid color-mix(in srgb, var(--text) 55%, transparent);
+      border-radius: 50%;
+    }
+    .earth-note {
+      top: calc(var(--earth-y) + 22px);
+      width: 80%;
+      margin: 0;
+      text-align: center;
+      font-size: 14px;
+      font-style: italic;
+      line-height: 1.4;
+      color: color-mix(in srgb, var(--text) 75%, transparent);
+    }
+    .earth-note span { display: block; margin-top: 4px; font-style: normal; font-size: 12px; color: var(--muted); }
   }
   .top { display: flex; justify-content: space-between; align-items: center; }
   .sub { margin: 4px 0 40px; font-size: 16px; }
