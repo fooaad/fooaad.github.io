@@ -4,14 +4,14 @@ export const profile = {
   name: 'Fuad',
   fullName: 'Md Fuadul Islam',
   handle: 'fooaad',
-  tagline: 'Software engineer, LLM systems & evaluation',
+  tagline: 'Software engineer (ex-Samsung R&D) · Prospective graduate student, Fall 2027',
   location: 'Tampa, FL',
   email: 'hi.fooaad@gmail.com',
 };
 
 export const intro = [
-  "I'm a software engineer working on LLM systems and how we evaluate them. I've built real-time media and transcription pipelines, picked models by measuring quality and cost on messy real-world audio, and worked on the plumbing behind an LLM-driven coding agent.",
-  "Before that I spent three years at Samsung R&D building iOS and Android apps, from push-to-talk calling for first responders to wearable apps for early Alzheimer's detection research. I came up through competitive programming and still enjoy a hard algorithm problem.",
+  "I'm a software engineer applying to graduate programs for Fall 2027. Over the past four years I've built systems that have to hold up in the real world: push-to-talk calling for first responders and wearable apps for early Alzheimer's detection research at Samsung R&D, and most recently real-time media and transcription pipelines built around large language models.",
+  "I like problems where careful measurement decides the answer. I've chosen models by testing quality and cost on messy real-world audio, and co-authored the first code-mixed Bangla–English sentiment corpus. I came up through competitive programming and still enjoy a hard algorithm problem.",
 ];
 
 export const work = [
@@ -26,7 +26,7 @@ export const research = [
     venue: 'IEEE',
     year: '2022',
     note: 'First code-mixed Bangla–English sentiment corpus (CoVaxBD); fine-tuned mBERT to 97.3% validation accuracy.',
-    url: '',
+    url: 'https://ieeexplore.ieee.org/abstract/document/10088478',
   },
 ];
 
@@ -44,7 +44,7 @@ export const education = [
 export const links = [
   { label: 'GitHub', url: 'https://github.com/fooaad' },
   { label: 'LinkedIn', url: 'https://www.linkedin.com/in/fooaad' },
-  { label: 'Google Scholar', url: '' },
-  { label: 'Codeforces', url: 'https://codeforces.com/profile/fuad' },
-  { label: 'CV', url: '' }, // set to '/cv.pdf' once a public (phone-free) CV is in public/
+  { label: 'Google Scholar', url: 'https://scholar.google.com/citations?user=Jq_-yXYAAAAJ' },
+  { label: 'Codeforces', url: 'https://codeforces.com/profile/Fuad' },
+  { label: 'CV', url: '/cv.pdf' }, // public copy, phone number removed
 ];

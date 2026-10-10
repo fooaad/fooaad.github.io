@@ -11,7 +11,7 @@ Fuad's personal site, built with Astro + TypeScript. Static output, no backend. 
 ## Where things live
 
 - `src/data/site.ts`: all homepage text (intro, work, research, links). Content changes go here, not in markup.
-- `src/content/writing/*.md`: blog posts, one file per post at `/writing/<file-name>/`. Schema in `src/content.config.ts`. `draft: true` posts show in dev only.
+- `src/content/writing/*.md`: blog posts, one file per post at `/writing/<file-name>/`. Schema in `src/content.config.ts`. `draft: true` posts show in dev only. The Writing section stays hidden until there's a published post.
 - `src/pages/`: routes (`index.astro`, `writing/[id].astro`, `rss.xml.ts`, `404.astro`)
 - `src/layouts/Base.astro`: `<head>`, meta tags, theme bootstrap; an optional `slot="aside"` becomes a second column at ≥1100px
 - `src/assets/pale-blue-dot-{light,dark}.webp`: homepage illustration after Voyager's Pale Blue Dot, one per theme (ChatGPT-generated, upscaled 2x with Upscayl, backgrounds knocked out to transparency so only the beam and Earth show). Only at 1100px+, full window height, uncropped. Earth's position per image lives in the `art` array in `index.astro`; it drives the ring
@@ -22,4 +22,4 @@ Fuad's personal site, built with Astro + TypeScript. Static output, no backend. 
 
 - Keep it minimal: plain CSS, no UI framework, no client JS beyond the theme toggle.
 - Import `z` from `astro/zod` (the `astro:content` export is deprecated).
-- `public/cv.pdf` is git-ignored because the private CV has a phone number. Commit only a public version.
+- `public/cv.pdf` is the public CV: the phone number is redacted (truly removed, not covered). Never commit a CV that still has it.

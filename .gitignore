@@ -30,5 +30,3 @@ pnpm-debug.log*
 # Claude Code personal settings
 .claude/settings.local.json
 
-# CV with personal phone number; replace with a public version before committing
-public/cv.pdf
