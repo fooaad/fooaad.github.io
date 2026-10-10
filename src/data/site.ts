@@ -15,7 +15,7 @@ export const intro = [
 ];
 
 export const work = [
-  { org: 'Re:cruit', role: 'Software engineering consultant', dates: '2026' },
+  { org: 're:cruit', role: 'Software engineering consultant', dates: '2026' },
   { org: 'Samsung R&D', role: 'Senior software engineer, Wearables', dates: '2024 – 2025' },
   { org: 'Samsung R&D', role: 'Software engineer, Service eXperience', dates: '2022 – 2024' },
 ];
